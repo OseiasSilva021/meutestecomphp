@@ -1,9 +1,10 @@
 <?php
 // Define as variáveis de conexão com o banco de dados
-$host = 'localhost';        // Nome do servidor onde o banco de dados está hospedado (geralmente "localhost" em ambiente local)
-$dbname = 'meu_banco_de_dados';  // Nome do banco de dados a ser acessado
-$user = 'root';             // Nome de usuário do banco de dados (normalmente "root" em ambientes locais)
-$pass = '';                 // Senha para acessar o banco de dados (em ambiente local, geralmente em branco para o usuário "root")
+$host = getenv('DB_HOST');
+$dbname = getenv('DB_NAME');
+$user = getenv('DB_USER');
+$pass = getenv('DB_PASS');
+             // Senha para acessar o banco de dados (em ambiente local, geralmente em branco para o usuário "root")
 
 // Cria uma nova instância de PDO para estabelecer uma conexão com o banco de dados
 // O PDO é utilizado para interagir com o banco de dados de forma segura e eficiente
