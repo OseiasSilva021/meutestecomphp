@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Define o conjunto de caracteres como UTF-8 para suportar acentos e caracteres especiais -->
+    <meta charset="UTF-8">
+    <!-- Define o título da página exibido na aba do navegador -->
+    <title>Formulário de Entrada</title>
+</head>
+<body>
+    <!-- Criação de um formulário com o id "formulario" -->
+    <form id="formulario">
+        <!-- Campo de entrada de texto para o usuário inserir uma informação -->
+        <input type="text" id="inputUsuario" placeholder="Digite algo" required>
+        <!-- Botão de envio que chama a função enviarDados() ao ser clicado -->
+        <button type="button" onclick="enviarDados()">Enviar</button>
+    </form>
+    
+    <!-- Título para exibir as entradas enviadas pelo usuário -->
+    <h2>Entradas dos Usuários:</h2>
+    <!-- Div onde as entradas dos usuários serão exibidas dinamicamente -->
+    <div id="resultado"></div>
+
+    <!-- Bloco de script JavaScript para a funcionalidade da página -->
+    <script>
+        // Função que envia os dados do usuário para o servidor
+        function enviarDados() {
+            // Captura o valor do input de usuário e armazena na variável userInput
+            const userInput = document.getElementById("inputUsuario").value;
+            
+            // Envia uma requisição POST para o arquivo PHP "salvar.php" para salvar o dado
+            fetch("salvar.php", {
+                method: "POST", // Define o método como POST para enviar dados
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded", // Define o tipo de conteúdo para formulário
+                },
+                // Codifica o valor do usuário e envia como conteúdo da requisição
+                body: "conteudo=" + encodeURIComponent(userInput),
+            })
+            // Processa a resposta da requisição como JSON
+            .then(response => response.json())
+            // Manipula o dado retornado, exibindo as entradas na div com id "resultado"
+            .then(data => {
+                // Converte o array de objetos em HTML, exibindo conteúdo e data
+                document.getElementById("resultado").innerHTML = data.map(entry => 
+                    `<p>${entry.conteudo} - ${entry.data}</p>`).join("");
+            })
+            // Trata qualquer erro que possa ocorrer durante o envio dos dados
+            .catch(error => console.error("Erro:", error));
+        }
+
+        // Função para carregar as entradas do usuário ao abrir a página
+        function carregarEntradas() {
+            // Envia uma requisição GET para "mostrar.php" para obter dados salvos
+            fetch("mostrar.php")
+            // Processa a resposta da requisição como JSON
+            .then(response => response.json())
+            // Manipula os dados, exibindo o conteúdo e a data de cada entrada na div "resultado"
+            .then(data => {
+                document.getElementById("resultado").innerHTML = data.map(entry => 
+                    `<p>${entry.conteudo} - ${entry.data}</p>`).join("");
+            });
+        }
+
+        // Chama a função carregarEntradas() para mostrar dados salvos ao abrir a página
+        carregarEntradas();
+    </script>
+</body>
+</html>
