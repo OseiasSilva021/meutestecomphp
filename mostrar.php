@@ -1,9 +1,9 @@
 <?php
 // Define as variáveis de conexão com o banco de dados
-$host = getenv('DB_HOST');
-$dbname = getenv('DB_NAME');
-$user = getenv('DB_USER');
-$pass = getenv('DB_PASS');
+$servername = "sql101.infinityfree.com";  // substitua pelo host do banco de dados gerado
+$username = "	if0_37715443";       // substitua pelo seu usuário do banco de dados
+$password = "MKpZNUO7ISKVG";           // substitua pela sua senha do banco de dados
+$dbname = "if0_37715443_meu_banco_de_dados";
              // Senha do banco de dados (em localhost, geralmente em branco para o usuário 'root')
 
 // Cria uma nova conexão com o banco de dados usando PDO (PHP Data Objects)
